@@ -98,6 +98,43 @@ class SeaBattle:
                 break
 
         # THREE-DECK
+        count_of_cells = 6
+        while count_of_cells > 0:
+            temp_row_index = random.randint(1, 10)
+            temp_col_index = random.randint(1, 10)
+            while True:
+                choice_of_direction = random.randint(1, 4)
+                # 1 - right, 2 - down, 3 - left, 4 - up
+
+                if matrix[temp_row_index][temp_col_index] == '#':
+                    break
+
+                match choice_of_direction:
+                    case 1:
+                        if self.is_fit_for_three_right(temp_row_index, temp_col_index, matrix):
+                            matrix[temp_row_index][temp_col_index] = matrix[temp_row_index][temp_col_index + 1] = \
+                                matrix[temp_row_index][temp_col_index + 2] = '#'
+                            count_of_cells -= 3
+                            break
+                    case 2:
+                        if self.is_fit_for_three_down(temp_row_index, temp_col_index, matrix):
+                            matrix[temp_row_index][temp_col_index] = matrix[temp_row_index + 1][temp_col_index] = \
+                                matrix[temp_row_index + 2][temp_col_index] = '#'
+                            count_of_cells -= 3
+                            break
+                    case 3:
+                        if self.is_fit_for_three_left(temp_row_index, temp_col_index, matrix):
+                            matrix[temp_row_index][temp_col_index] = matrix[temp_row_index][temp_col_index - 1] = \
+                                matrix[temp_row_index][temp_col_index - 2] = '#'
+                            count_of_cells -= 3
+                            break
+                    case 4:
+                        if self.is_fit_for_three_up(temp_row_index, temp_col_index, matrix):
+                            matrix[temp_row_index][temp_col_index] = matrix[temp_row_index - 1][temp_col_index] = \
+                                matrix[temp_row_index - 2][temp_col_index] = '#'
+                            count_of_cells -= 3
+                            break
+                break
 
     # CHECKS IF THE GIVEN PLACE IS SUITABLE FOR A SINGLE-DECK SHIP
     @staticmethod
@@ -108,6 +145,7 @@ class SeaBattle:
             return True
         return False
 
+    # CHECKS IF THE GIVEN PLACE IS SUITABLE FOR A DOUBLE-DECK SHIP
     @staticmethod
     def is_fit_for_two_right(row, col, matrix):
         if matrix[row][col] == '-' and matrix[row][col + 1] == '-' and matrix[row - 1][col - 1] != '#' and \
@@ -116,9 +154,6 @@ class SeaBattle:
                 and matrix[row - 1][col + 2] != '#' and matrix[row][col + 2] != '#' and matrix[row + 1][col + 2] != '#':
             return True
         return False
-
-    def is_fit_for_two_left(self, row, col, matrix):
-        return self.is_fit_for_two_right(row, col - 1, matrix)
 
     @staticmethod
     def is_fit_for_two_down(row, col, matrix):
@@ -131,6 +166,38 @@ class SeaBattle:
 
     def is_fit_for_two_up(self, row, col, matrix):
         return self.is_fit_for_two_down(row - 1, col, matrix)
+
+    def is_fit_for_two_left(self, row, col, matrix):
+        return self.is_fit_for_two_right(row, col - 1, matrix)
+
+    # CHECKS IF THE GIVEN PLACE IS SUITABLE FOR A THREE-DECK SHIP
+    @staticmethod
+    def is_fit_for_three_right(row, col, matrix):
+        if matrix[row][col] == '-' and matrix[row][col + 1] == '-' and matrix[row][col + 2] == '-' and \
+                matrix[row - 1][col - 1] != '#' and matrix[row][col - 1] != '#' and matrix[row + 1][col - 1] != '#' \
+                and matrix[row + 1][col] != '#' and matrix[row - 1][col] != '#' and matrix[row - 1][col + 1] != '#' \
+                and matrix[row + 1][col + 1] != '#' and matrix[row - 1][col + 2] != '#' and \
+                matrix[row + 1][col + 2] != '#' and matrix[row - 1][col + 3] != '#' and matrix[row][col + 3] != '#' \
+                and matrix[row + 1][col + 3] != '#':
+            return True
+        return False
+
+    @staticmethod
+    def is_fit_for_three_down(row, col, matrix):
+        if matrix[row][col] == '-' and matrix[row + 1][col] == '-' and matrix[row + 2][col] == '-' and \
+                matrix[row - 1][col - 1] != '#' and matrix[row - 1][col] != '#' and matrix[row - 1][col + 1] != '#' \
+                and matrix[row][col - 1] != '#' and matrix[row][col + 1] != '#' and matrix[row + 1][col - 1] != '#' \
+                and matrix[row + 1][col + 1] != '#' and matrix[row + 2][col - 1] != '#' and \
+                matrix[row + 2][col + 1] != '#' and matrix[row + 3][col - 1] != '#' and matrix[row + 3][col] != '#' \
+                and matrix[row + 3][col + 1] != '#':
+            return True
+        return False
+
+    def is_fit_for_three_up(self, row, col, matrix):
+        return self.is_fit_for_three_down(row - 2, col, matrix)
+
+    def is_fit_for_three_left(self, row, col, matrix):
+        return self.is_fit_for_three_right(row, col - 2, matrix)
 
 
 if __name__ == '__main__':
