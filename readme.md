@@ -6,4 +6,4 @@ At the moment it has a primitive design:
  3) The "%" symbol means that there is a ship in this cell that has been hit.  
  4) The "^" symbol means that this cell has been shot at and is empty.
 
-![Image alt](https://github.com/vbobovoz/SeaBattle/blob/main/first_design.jpg)
+![Image alt](https://github.com/vbobovoz/SeaBattle/blob/main/images/design2.jpg)
